@@ -1,8 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_try/IntroPage.dart';
+import 'package:flutter_try/firebase_options.dart';
 
-void main() {
+import 'FirebaseService.dart';
+/*
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
+*/
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -59,14 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+
+
     });
   }
+  final firstText=TextEditingController();
+  final lastText=TextEditingController();
+  final _formKey=GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -87,28 +104,41 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body:Form(
+        key: _formKey,
         child: Column(
         children: [
           TextFormField(
+            controller: firstText,
+
           decoration: InputDecoration(
         border: OutlineInputBorder(),
           hintText: "Enter Yout Name",
-          label: Text("First Name")
+          label: Text("First Name"),
     ),
     ),
           TextFormField(
+            controller: lastText,
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Enter Yout Name",
-                label: Text("First Name")
+                label: Text("Last Name")
             ),
           ),
 
           SizedBox(
             height: 30,
           ),
-          ElevatedButton(onPressed: (){
-            print("Button is pressed");
+          ElevatedButton(onPressed: () async {
+            if(_formKey.currentState!.validate())
+              {
+
+               /* ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${firstText.text.toString()}")));
+                bool issignup = await FirebaseService.fireFunction(firstText,lastText);*/
+
+              }
+            print(firstText.text);
+            print(lastText.text);
+            FirebaseService.fireFunction(firstText.text.toString(),lastText.text.toString());
           }, child: Text("Press me"))
     ],
     ),
