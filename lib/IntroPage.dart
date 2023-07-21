@@ -17,9 +17,6 @@ class IntroPage extends StatelessWidget{
           height: 11,
         ),
         ElevatedButton(onPressed: () async {
-          // bool issignup = await FirebaseService(
-          //
-          // );
 
         }, child: Text("Next Page"))
     ]
